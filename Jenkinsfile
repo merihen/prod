@@ -18,7 +18,7 @@ pipeline {
 
             steps {
                     echo 'building .. '
-                    sh "cd complete"
+                    //sh "cd complete"
                     sh 'mvn clean install'
                     echo 'build complete'
             }
