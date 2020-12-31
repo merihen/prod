@@ -39,8 +39,8 @@ pipeline {
         stage('Deploy to QA') {
             steps {
                 echo'Deploying'
-                //sh "docker stop  ${container_name}"
-                //sh "docker rm  ${container_name}"
+                sh "docker stop  ${container_name}"
+                sh "docker rm  ${container_name}"
                 sh "docker run -p 8095:8080 -d --name ${container_name} imageqa:${commit_id}"
                 echo 'deployment complete'
             }
