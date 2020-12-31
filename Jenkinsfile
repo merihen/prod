@@ -14,7 +14,7 @@ pipeline {
                 echo'Deploying'
                 //sh "docker stop  ${container_name}"
                 //sh "docker rm  ${container_name}"
-                sh "docker run -p 8095:8080 -d --name ${container_name} merihen/devopsprod:1.0"
+                sh "docker run -p 8096:8080 -d --name ${container_name} merihen/devopsprod:1.0"
                 echo 'deployment complete'
             }
         }
