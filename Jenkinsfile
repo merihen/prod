@@ -1,5 +1,5 @@
 def commit_id
-def container_name="containerdev"
+def container_name="containerqa"
 pipeline {
     agent any
 
@@ -18,7 +18,10 @@ pipeline {
 
             steps {
                     echo 'building .. '
+<<<<<<< HEAD
                     //sh "cd complete"
+=======
+>>>>>>> 0.1.0
                     sh 'mvn clean install'
                     echo 'build complete'
             }
@@ -29,24 +32,30 @@ pipeline {
             }
         }
 
- 
         stage(' Build Docker image') {
             steps {
                 echo 'Building....'
                 sh 'mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)'
-                sh "docker build -t imagedev:${commit_id} ."
+                sh "docker build -t imageqa:${commit_id} ."
                 echo 'build complete'
             }
         }
-        stage('Deploy to dev') {
+        stage('Deploy to QA') {
             steps {
                 echo'Deploying'
-                //sh "docker stop  ${container_name}"
-                //sh "docker rm  ${container_name}"
-                sh "docker run -p 8095:8080 -d --name ${container_name} imagedev:${commit_id}"
+                sh "docker stop  ${container_name}"
+                sh "docker rm  ${container_name}"
+                sh "docker run -p 8095:8080 -d --name ${container_name} imageqa:${commit_id}"
                 echo 'deployment complete'
             }
         }
-
+        stage('Push to the docker hub'){
+            steps {
+            echo 'Connect to docker hub'
+            sh 'docker login -u merihen -p SIWARSIWAR '
+            sh "docker tag imageqa:${commit_id} merihen/devopsprod:1.0"
+            sh 'docker push merihen/devopsprod:1.0'
+            }
+        }
     }
 }
