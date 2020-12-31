@@ -50,6 +50,7 @@ pipeline {
             echo 'Connect to docker hub'
             sh 'docker login -u merihen -p SIWARSIWAR '
             sh "docker tag imageqa:${commit_id} merihen/devopsprod:1.0"
+            sh 'docker push merihen/devopsprod:1.0'
             }
         }
     }
